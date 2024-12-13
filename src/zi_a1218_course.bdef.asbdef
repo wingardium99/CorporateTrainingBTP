@@ -1,0 +1,58 @@
+managed implementation in class zbp_i_a1218_course unique;
+strict ( 2 );
+
+define behavior for zi_a1218_course //alias <alias_name>
+persistent table zcourse_a1218
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly , numbering : managed ) CourseUuid;
+  association _Schedule { create; }
+
+  mapping for zcourse_a1218 {
+  CourseUuid = course_uuid; // CDS Element = Table Field
+  CourseId = course_id;
+  CourseName = course_name;
+  CourseLength = course_length;
+  Country = country;
+  Price = price;
+  CurrencyCode = currency_code;
+  // 관리 필드(들)
+  LastChangedAt = last_changed_at;
+  LocalLastChangedAt = local_last_changed_at;
+
+}
+}
+
+define behavior for zi_a1218_schedule //alias <alias_name>
+persistent table zschedule_a1218
+lock dependent by _Course
+authorization dependent by _Course
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly , numbering : managed ) ScheduleUuid;
+  field ( readonly )  CourseUuid;
+  association _Course;
+
+  mapping for zschedule_a1218 {
+
+  ScheduleUuid = schedule_uuid;
+  CourseUuid = course_uuid;
+  CourseBegin = course_begin;
+  Trainer = trainer;
+  IsOnline = is_online;
+  Location = location;
+
+  // 관리 필드 ( 들 )
+  LastChangedAt = last_changed_at;
+  LocalLastChangedAt = local_last_changed_at;
+
+  }
+
+}

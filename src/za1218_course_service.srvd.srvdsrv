@@ -1,0 +1,5 @@
+@EndUserText.label: 'Course Service Definition'
+define service ZA1218_COURSE_SERVICE {
+  expose ZC_A1218_COURSE   as Course;
+  expose ZC_A1218_SCHEDULE as Schedule;
+}
